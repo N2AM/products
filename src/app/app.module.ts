@@ -9,18 +9,22 @@ import {NgxsModule} from "@ngxs/store";
 import {environment} from "../environments/environment";
 import {NgxsEmitPluginModule} from "@ngxs-labs/emitter";
 import {HttpClientModule} from "@angular/common/http";
+import { AddProductComponent } from './products/components/add-product/add-product.component';
+import {ReactiveFormsModule} from "@angular/forms";
+import {MatInputModule} from "@angular/material/input";
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AddProductComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    BrowserAnimationsModule,NgxsModule.forRoot([], {
+    BrowserAnimationsModule, NgxsModule.forRoot([], {
       developmentMode: !environment.production
-    }), NgxsEmitPluginModule.forRoot(),
+    }), NgxsEmitPluginModule.forRoot(), ReactiveFormsModule, MatInputModule,
   ],
   providers: [{ provide: APP_BASE_HREF, useValue: '/products/' }],
   bootstrap: [AppComponent]

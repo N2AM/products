@@ -1,6 +1,6 @@
-export interface Product {
+export interface ProductModel{
+  id: number;
   code: string;
   name: string;
   basePrice: number;
-  totalPrice: number;
 }
