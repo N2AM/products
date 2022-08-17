@@ -1,0 +1,11 @@
+{
+  "products": [{
+    "code": "3456",
+    "name": "T-shirt",
+    "basePrice": "20"
+  },{
+    "code": "4567",
+    "name": "Jeans",
+    "basePrice": "60"
+  }]
+}

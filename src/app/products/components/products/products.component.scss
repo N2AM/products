@@ -1,0 +1,17 @@
+@use 'base' as b;
+
+.table-layout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 2 * b.$base-unit;
+  padding-top: b.$base-unit;
+
+  .full-width {
+    width: 90%;
+  }
+  .mat-elevation-z8 {
+    width: 90%;
+  }
+}
