@@ -1,0 +1,27 @@
+<div>
+  <form [formGroup]="productForm" (ngSubmit)="submit()">
+    <div class="form-input">
+      <mat-form-field appearance="fill">
+        <mat-label>Enter product code</mat-label>
+        <input matInput placeholder="1234" formControlName="code" required>
+        <mat-error *ngIf="productForm.controls['basePrice'].errors">Enter valid code</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="form-input">
+      <mat-form-field appearance="fill">
+        <mat-label>Enter product name</mat-label>
+        <input matInput placeholder="Jeans" formControlName="name" required>
+        <mat-error *ngIf="productForm.controls['name'].errors">Enter valid name</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="form-input">
+      <mat-form-field appearance="fill" floatLabel="always">
+        <mat-label>Enter product price</mat-label>
+        <input matInput placeholder="0" formControlName="basePrice" required>
+        <span matSuffix>EUR</span>
+        <mat-error *ngIf="productForm.controls['basePrice'].errors">Enter valid price</mat-error>
+      </mat-form-field>
+    </div>
+    <button mat-button class="submit-btn" color="primary" [disabled]="!productForm.valid">Submit</button>
+  </form>
+</div>

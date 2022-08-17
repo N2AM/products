@@ -1,0 +1,10 @@
+@use 'base' as b;
+
+.form-input{
+  margin-top: b.$base-margin;
+}
+.submit-btn{
+  margin-top: b.$base-margin ;
+  padding: .5*b.$base-padding;
+  border: transparent;
+}
