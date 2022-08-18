@@ -1,10 +1,15 @@
 <div class="bill-layout">
-  <button mat-raised-button (click)="goToProducts()">Back to Products</button>
+  <button id="back-to-products" mat-raised-button (click)="goToProducts()">Back to Products</button>
   <div class="summary">
     <img src="assets/imgs/check.jpg" alt="success">
-    <span class="">Bill Summary</span>
+    <h3>Bill Summary</h3>
     <ul class="products-list">
-      <li *ngFor="let product of products"><span>{{product.name}}</span><span>{{product.basePrice}} EUR</span></li>
+      <li *ngFor="let product of products">
+        <span>{{product.name}}</span>
+        <span class="price">{{product.basePrice}} EUR</span>
+      </li>
     </ul>
+    <h3>SubTotal: {{subTotal}}</h3>
+    <h3>Taxed SubTotal: {{subTaxedTotal}}</h3>
   </div>
 </div>

@@ -8,6 +8,7 @@ import {ProductModel} from "../../../models/product-model.model";
 import {ProductsActionType} from "./products.action.ts";
 
 export const DEFAULT_PRODUCT_STATE: Product[] = [{
+  id:0,
   Code: '',
   Name: '',
   'Price (EUR)': 0,
@@ -53,8 +54,8 @@ export class ProductsState {
 
   @Receiver({ type: ProductsActionType.PRODUCT_STATE_EDIT })
   public static editProduct(
-    product:ProductModel
-  ): Observable<Product> {
-    return this.productsDataService.addProduct$(product);
+      ctx: StateContext<ProductModel>,
+      { payload }: EmitterAction<ProductModel>  ): Observable<Product> {
+    return this.productsDataService.editProduct$(payload);
   }
 }

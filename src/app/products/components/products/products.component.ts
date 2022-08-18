@@ -10,6 +10,7 @@ import {PageBusyStateService} from "../../shared/store/page-busy/page-busy-state
 import {MatDialog} from "@angular/material/dialog";
 import {AddProductComponent} from "../add-product/add-product.component";
 import {Router} from "@angular/router";
+import {calcPriceSubTotal, calcTaxedPrice} from "../../utils/utils";
 
 @Component({
   selector: 'app-products',
@@ -35,13 +36,13 @@ export class ProductsComponent implements OnInit {
   this.#subscriptions.add(
     this.productsStateService.products$.subscribe((products: ProductModel[]) => {
     const displayedProducts: Product[] = products.map((product: ProductModel)=>{
-    return { 'Code': product.code, "Name": product.name,
+    return { 'id': product.id, 'Code': product.code, "Name": product.name,
       'Price (EUR)': product.basePrice,
-      'Price + Tax (EUR)' : this.calcTaxedPrice(product.basePrice),
+      'Price + Tax (EUR)' : calcTaxedPrice(product.basePrice),
     }});
     if(products){
-      this.subTotal = this.calcPriceSubTotal(products);
-      this.subTaxedTotal = this.calcTaxedPrice(this.subTotal);
+      this.subTotal = calcPriceSubTotal(products);
+      this.subTaxedTotal = calcTaxedPrice(this.subTotal);
       this.dataSource = new MatTableDataSource(displayedProducts);
     }
     }));
@@ -50,16 +51,6 @@ export class ProductsComponent implements OnInit {
     this.pageBusyStateService.pageBusy$.subscribe(pageBusy=>{
       this.pageBusy = pageBusy;
     }));
-  }
-
-  calcTaxedPrice(basePrice: number): number{
-    return Number((basePrice * 1.21).toFixed(2));
-  }
-
-  calcPriceSubTotal(products : ProductModel[]): number{
-    return products.reduce((accumulator, currentValue)=>{
-      return accumulator+currentValue.basePrice
-    },0)
   }
 
   openDialog(): void {
@@ -79,8 +70,12 @@ export class ProductsComponent implements OnInit {
     }
   }
 
-  editProduct(product:ProductModel):void{
-
+  editProduct(product:Product):void{
+    let editProduct = {id:product.id, code: product.Code, name: product.Name, basePrice: product["Price (EUR)"]  }
+    this.productsStateService.editProduct.emit(editProduct);
+    setTimeout(()=>{
+      this.productsStateService.setProducts.emit()
+    },500 )
   }
 
   goToBill(): void{

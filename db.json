@@ -2,33 +2,15 @@
   "products": [
     {
       "id": 1,
-      "code": "3456",
-      "name": "T-shirt",
-      "basePrice": 20
+      "code": "5678",
+      "name": "Jumpsuit",
+      "basePrice": "25"
     },
     {
       "id": 2,
       "code": "4567",
       "name": "Jeans",
-      "basePrice": 60
-    },
-    {
-      "code": "4444",
-      "name": "N",
-      "basePrice": 78,
-      "id": 3
-    },
-    {
-      "code": "12333",
-      "name": "hhh",
-      "basePrice": 20,
-      "id": 4
-    },
-    {
-      "code": 1111,
-      "name": "dfff",
-      "basePrice": 2,
-      "id": 5
+      "basePrice": "40"
     }
   ]
 }
