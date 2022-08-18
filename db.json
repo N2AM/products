@@ -15,14 +15,20 @@
     {
       "code": "4444",
       "name": "N",
-      "basePrice": "78",
+      "basePrice": 78,
       "id": 3
     },
     {
       "code": "12333",
       "name": "hhh",
-      "basePrice": "20",
+      "basePrice": 20,
       "id": 4
+    },
+    {
+      "code": 1111,
+      "name": "dfff",
+      "basePrice": 2,
+      "id": 5
     }
   ]
 }

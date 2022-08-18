@@ -9,6 +9,7 @@ import {Column} from "../../models/column.model";
 import {PageBusyStateService} from "../../shared/store/page-busy/page-busy-state.service";
 import {MatDialog} from "@angular/material/dialog";
 import {AddProductComponent} from "../add-product/add-product.component";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-products',
@@ -27,7 +28,7 @@ export class ProductsComponent implements OnInit {
 
   constructor( private productsStateService: ProductsStateService,
                private pageBusyStateService:PageBusyStateService,
-               public dialog: MatDialog) { }
+               public dialog: MatDialog, private router: Router) { }
 
   ngOnInit(): void{
   this.productsStateService.setProducts.emit();
@@ -38,10 +39,11 @@ export class ProductsComponent implements OnInit {
       'Price (EUR)': product.basePrice,
       'Price + Tax (EUR)' : this.calcTaxedPrice(product.basePrice),
     }});
+    if(products){
       this.subTotal = this.calcPriceSubTotal(products);
       this.subTaxedTotal = this.calcTaxedPrice(this.subTotal);
-      console.log(this.subTotal, this.subTaxedTotal)
       this.dataSource = new MatTableDataSource(displayedProducts);
+    }
     }));
 
   this.#subscriptions.add(
@@ -51,22 +53,19 @@ export class ProductsComponent implements OnInit {
   }
 
   calcTaxedPrice(basePrice: number): number{
-    return (basePrice * 1.21);
+    return Number((basePrice * 1.21).toFixed(2));
   }
 
   calcPriceSubTotal(products : ProductModel[]): number{
-    let sum = 0;
-    products.forEach(elm=>{
-      sum+= elm.basePrice;
-    })
-    return sum;
+    return products.reduce((accumulator, currentValue)=>{
+      return accumulator+currentValue.basePrice
+    },0)
   }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(AddProductComponent);
 
     dialogRef.afterClosed().subscribe((result:ProductModel) => {
-      console.log(`Dialog result: ${result}`);
       this.addProduct(result)
     });
   }
@@ -76,12 +75,16 @@ export class ProductsComponent implements OnInit {
     this.productsStateService.addProduct.emit(product);
     setTimeout(()=>{
       this.productsStateService.setProducts.emit()
-    },200 )
+    },500 )
     }
   }
 
   editProduct(product:ProductModel):void{
 
+  }
+
+  goToBill(): void{
+    this.router.navigateByUrl('/bill', {state: {subTotal: this.subTotal, subTaxedTotal: this.subTaxedTotal}})
   }
 
   ngOnDestroy(): void {
